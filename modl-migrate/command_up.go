@@ -4,7 +4,7 @@ import (
 	"flag"
 	"strings"
 
-	"github.com/rubenv/sql-migrate"
+	"github.com/rubenv/modl-migrate"
 )
 
 type UpCommand struct {
@@ -12,7 +12,7 @@ type UpCommand struct {
 
 func (c *UpCommand) Help() string {
 	helpText := `
-Usage: sql-migrate up [options] ...
+Usage: modl-migrate up [options] ...
 
   Migrates the database to the most recent version available.
 

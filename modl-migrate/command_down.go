@@ -4,7 +4,7 @@ import (
 	"flag"
 	"strings"
 
-	"github.com/rubenv/sql-migrate"
+	"github.com/rubenv/modl-migrate"
 )
 
 type DownCommand struct {
@@ -12,7 +12,7 @@ type DownCommand struct {
 
 func (c *DownCommand) Help() string {
 	helpText := `
-Usage: sql-migrate down [options] ...
+Usage: modl-migrate down [options] ...
 
   Undo a database migration.
 

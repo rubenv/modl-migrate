@@ -32,7 +32,7 @@ func realMain() int {
 				return &StatusCommand{}, nil
 			},
 		},
-		HelpFunc: cli.BasicHelpFunc("sql-migrate"),
+		HelpFunc: cli.BasicHelpFunc("modl-migrate"),
 		Version:  "1.0.0",
 	}
 

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/rubenv/sql-migrate"
+	"github.com/rubenv/modl-migrate"
 )
 
 type RedoCommand struct {
@@ -13,7 +13,7 @@ type RedoCommand struct {
 
 func (c *RedoCommand) Help() string {
 	helpText := `
-Usage: sql-migrate redo [options] ...
+Usage: modl-migrate redo [options] ...
 
   Reapply the last migration.
 

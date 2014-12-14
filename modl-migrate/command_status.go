@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/olekukonko/tablewriter"
-	"github.com/rubenv/sql-migrate"
+	"github.com/rubenv/modl-migrate"
 )
 
 type StatusCommand struct {
@@ -16,7 +16,7 @@ type StatusCommand struct {
 
 func (c *StatusCommand) Help() string {
 	helpText := `
-Usage: sql-migrate status [options] ...
+Usage: modl-migrate status [options] ...
 
   Show migration status.
 
