@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	"github.com/coopernurse/gorp"
+	"github.com/jmoiron/modl"
 	"gopkg.in/yaml.v1"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -15,10 +15,10 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-var dialects = map[string]gorp.Dialect{
-	"sqlite3":  gorp.SqliteDialect{},
-	"postgres": gorp.PostgresDialect{},
-	"mysql":    gorp.MySQLDialect{"InnoDB", "UTF8"},
+var dialects = map[string]modl.Dialect{
+	"sqlite3":  modl.SqliteDialect{},
+	"postgres": modl.PostgresDialect{},
+	"mysql":    modl.MySQLDialect{"InnoDB", "UTF8"},
 }
 
 var ConfigFile string
