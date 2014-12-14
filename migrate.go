@@ -415,7 +415,7 @@ Check https://github.com/go-sql-driver/mysql#parsetime for more info.`)
 	}
 
 	// Create migration database map
-	dbMap := &modl.DbMap{Db: db, Dialect: d}
+	dbMap := modl.NewDbMap(db, d)
 	dbMap.AddTableWithName(MigrationRecord{}, tableName).SetKeys(false, "Id")
 	//dbMap.TraceOn("", log.New(os.Stdout, "migrate: ", log.Lmicroseconds))
 

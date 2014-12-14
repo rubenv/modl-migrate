@@ -35,7 +35,7 @@ func (s *SqliteMigrateSuite) SetUpTest(c *C) {
 	c.Assert(err, IsNil)
 
 	s.Db = db
-	s.DbMap = &modl.DbMap{Db: db, Dialect: &modl.SqliteDialect{}}
+	s.DbMap = modl.NewDbMap(db, &modl.SqliteDialect{})
 }
 
 func (s *SqliteMigrateSuite) TearDownTest(c *C) {
