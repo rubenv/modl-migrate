@@ -177,7 +177,7 @@ func (s *SqliteMigrateSuite) TestMigrateDown(c *C) {
 	var count int64
 	err = s.DbMap.Dbx.Get(&count, "SELECT COUNT(*) FROM people")
 	c.Assert(err, IsNil)
-	c.Assert(id, Equals, int64(0))
+	c.Assert(count, Equals, int64(0))
 
 	// Remove the table.
 	n, err = ExecMax(s.Db, "sqlite3", migrations, Down, 1)
