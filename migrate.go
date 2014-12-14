@@ -14,7 +14,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/coopernurse/gorp"
+	"github.com/jmoiron/modl"
 	"github.com/rubenv/sql-migrate/sqlparse"
 )
 
@@ -25,7 +25,7 @@ const (
 	Down
 )
 
-var tableName = "gorp_migrations"
+var tableName = "modl_migrations"
 var numberPrefixRegex = regexp.MustCompile(`^(\d+).*$`)
 
 // Set the name of the table used to store migration info.
@@ -89,12 +89,10 @@ type MigrationRecord struct {
 	AppliedAt time.Time `db:"applied_at"`
 }
 
-var MigrationDialects = map[string]gorp.Dialect{
-	"sqlite3":  gorp.SqliteDialect{},
-	"postgres": gorp.PostgresDialect{},
-	"mysql":    gorp.MySQLDialect{"InnoDB", "UTF8"},
-	"mssql":    gorp.SqlServerDialect{},
-	"oci8":     gorp.OracleDialect{},
+var MigrationDialects = map[string]modl.Dialect{
+	"sqlite3":  modl.SqliteDialect{},
+	"postgres": modl.PostgresDialect{},
+	"mysql":    modl.MySQLDialect{"InnoDB", "UTF8"},
 }
 
 type MigrationSource interface {
@@ -291,7 +289,7 @@ func ExecMax(db *sql.DB, dialect string, m MigrationSource, dir MigrationDirecti
 }
 
 // Plan a migration.
-func PlanMigration(db *sql.DB, dialect string, m MigrationSource, dir MigrationDirection, max int) ([]*PlannedMigration, *gorp.DbMap, error) {
+func PlanMigration(db *sql.DB, dialect string, m MigrationSource, dir MigrationDirection, max int) ([]*PlannedMigration, *modl.DbMap, error) {
 	dbMap, err := getMigrationDbMap(db, dialect)
 	if err != nil {
 		return nil, nil, err
@@ -303,7 +301,7 @@ func PlanMigration(db *sql.DB, dialect string, m MigrationSource, dir MigrationD
 	}
 
 	var migrationRecords []MigrationRecord
-	_, err = dbMap.Select(&migrationRecords, fmt.Sprintf("SELECT * FROM %s", tableName))
+	err = dbMap.Select(&migrationRecords, fmt.Sprintf("SELECT * FROM %s", tableName))
 	if err != nil {
 		return nil, nil, err
 	}
@@ -384,7 +382,7 @@ func GetMigrationRecords(db *sql.DB, dialect string) ([]*MigrationRecord, error)
 
 	var records []*MigrationRecord
 	query := fmt.Sprintf("SELECT * FROM %s ORDER BY id ASC", tableName)
-	_, err = dbMap.Select(&records, query)
+	err = dbMap.Select(&records, query)
 	if err != nil {
 		return nil, err
 	}
@@ -392,7 +390,7 @@ func GetMigrationRecords(db *sql.DB, dialect string) ([]*MigrationRecord, error)
 	return records, nil
 }
 
-func getMigrationDbMap(db *sql.DB, dialect string) (*gorp.DbMap, error) {
+func getMigrationDbMap(db *sql.DB, dialect string) (*modl.DbMap, error) {
 	d, ok := MigrationDialects[dialect]
 	if !ok {
 		return nil, fmt.Errorf("Unknown dialect: %s", dialect)
@@ -417,7 +415,7 @@ Check https://github.com/go-sql-driver/mysql#parsetime for more info.`)
 	}
 
 	// Create migration database map
-	dbMap := &gorp.DbMap{Db: db, Dialect: d}
+	dbMap := &modl.DbMap{Db: db, Dialect: d}
 	dbMap.AddTableWithName(MigrationRecord{}, tableName).SetKeys(false, "Id")
 	//dbMap.TraceOn("", log.New(os.Stdout, "migrate: ", log.Lmicroseconds))
 

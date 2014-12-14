@@ -1,11 +1,11 @@
 /*
 
-SQL Schema migration tool for Go.
+SQL Schema migration tool for Go, using modl.
 
 Key features:
 
 	* Usable as a CLI tool or as a library
-	* Supports SQLite, PostgreSQL, MySQL, MSSQL and Oracle databases (through gorp)
+	* Supports SQLite, PostgreSQL, MySQL, MSSQL and Oracle databases (through modl)
 	* Can embed migrations into your application
 	* Migrations are defined with SQL for full flexibility
 	* Atomic migrations
@@ -16,14 +16,14 @@ Installation
 
 To install the library and command line program, use the following:
 
-	go get github.com/rubenv/sql-migrate/...
+	go get github.com/rubenv/modl-migrate/...
 
 Command-line tool
 
-The main command is called sql-migrate.
+The main command is called modl-migrate.
 
-	$ sql-migrate --help
-	usage: sql-migrate [--version] [--help] <command> [<args>]
+	$ modl-migrate --help
+	usage: modl-migrate [--version] [--help] <command> [<args>]
 
 	Available commands are:
 		down      Undo a database migration
@@ -44,14 +44,14 @@ Each command requires a configuration file (which defaults to dbconfig.yml, but 
 		dir: migrations/postgres
 		table: migrations
 
-The `table` setting is optional and will default to `gorp_migrations`.
+The `table` setting is optional and will default to `modl_migrations`.
 
 The environment that will be used can be specified with the -env flag (defaults to development).
 
 Use the --help flag in combination with any of the commands to get an overview of its usage:
 
-	$ sql-migrate up --help
-	Usage: sql-migrate up [options] ...
+	$ modl-migrate up --help
+	Usage: modl-migrate up [options] ...
 
 	  Migrates the database to the most recent version available.
 
@@ -68,7 +68,7 @@ The redo command will unapply the last migration and reapply it. This is useful 
 
 Use the status command to see the state of the applied migrations:
 
-	$ sql-migrate status
+	$ modl-migrate status
 	+---------------+-----------------------------------------+
 	|   MIGRATION   |                 APPLIED                 |
 	+---------------+-----------------------------------------+
@@ -78,9 +78,9 @@ Use the status command to see the state of the applied migrations:
 
 Library
 
-Import sql-migrate into your application:
+Import modl-migrate into your application:
 
-	import "github.com/rubenv/sql-migrate"
+	import "github.com/rubenv/modl-migrate"
 
 Set up a source of migrations, this can be from memory, from a set of files or from bindata (more on that later):
 
@@ -160,7 +160,7 @@ If you have complex statements which contain semicolons, use StatementBegin and 
 	DROP FUNCTION do_something();
 	DROP TABLE people;
 
-The order in which migrations are applied is defined through the filename: sql-migrate will sort migrations based on their name. It's recommended to use an increasing version number or a timestamp as the first part of the filename.
+The order in which migrations are applied is defined through the filename: modl-migrate will sort migrations based on their name. It's recommended to use an increasing version number or a timestamp as the first part of the filename.
 
 Embedding migrations with bindata
 
