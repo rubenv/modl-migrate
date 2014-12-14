@@ -5,7 +5,7 @@ SQL Schema migration tool for Go, using modl.
 Key features:
 
 	* Usable as a CLI tool or as a library
-	* Supports SQLite, PostgreSQL, MySQL, MSSQL and Oracle databases (through modl)
+	* Supports SQLite, PostgreSQL and MySQL databases (through modl)
 	* Can embed migrations into your application
 	* Migrations are defined with SQL for full flexibility
 	* Atomic migrations
